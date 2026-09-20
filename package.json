@@ -2,7 +2,10 @@
   "name": "flowwhisper",
   "version": "0.1.7",
   "description": "跨平台流式语音输入，随想随说，自然成文。",
-  "author": "FlowWhisper contributors",
+  "author": {
+    "name": "FlowWhisper contributors",
+    "email": "YuheJi@users.noreply.github.com"
+  },
   "license": "MIT",
   "private": true,
   "type": "module",
