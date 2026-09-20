@@ -70,7 +70,7 @@
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true
     },
-    "mac": {
+      "mac": {
       "target": [
         {
           "target": "dmg",
@@ -80,7 +80,7 @@
           ]
         }
       ],
-      "icon": "build/icon.png",
+      "icon": "build/icon-large.png",
       "category": "public.app-category.productivity",
       "hardenedRuntime": true,
       "entitlements": "build/entitlements.mac.plist",
@@ -91,6 +91,7 @@
       }
     },
     "linux": {
+      "icon": "build/icon-large.png",
       "target": [
         "AppImage",
         "deb"
