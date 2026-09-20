@@ -89,6 +89,15 @@
         "NSMicrophoneUsageDescription": "FlowWhisper 使用麦克风将你的语音转换为文字。",
         "NSAppleEventsUsageDescription": "FlowWhisper 将识别后的文字粘贴到你正在使用的应用。"
       }
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Utility",
+      "synopsis": "跨平台流式语音输入",
+      "description": "随想随说，自然成文的跨平台桌面语音输入工具。"
     }
   }
 }

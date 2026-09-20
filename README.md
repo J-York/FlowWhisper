@@ -38,6 +38,19 @@ npm run dist:mac      # 在 macOS 生成 arm64 / x64 DMG
 
 安装包输出到 `release/`。本机开发构建未签名；正式发布需要 Windows 代码签名证书，以及 Apple Developer ID 签名、公证凭据。macOS 安装包应在 macOS 构建和测试，不能把 Windows 构建成功视为 macOS 验证完成。仓库提供双平台 GitHub Actions 构建流程。
 
+## 发布安装包
+
+仓库的 GitHub Actions 会在推送 `v*` 标签时自动构建并发布安装包：
+
+```sh
+npm version patch        # 例如 0.1.7 -> 0.1.8，并创建 v0.1.8 标签
+git push origin main --follow-tags
+```
+
+发布完成后，GitHub 会创建对应的 Release，并附加 Windows NSIS 安装包、macOS arm64/x64 DMG，以及 Linux AppImage 和 deb 安装包。普通推送和 Pull Request 仍会执行测试与构建检查，但不会创建 Release。
+
+当前工作流生成未签名安装包。正式面向公众分发前，应在 GitHub Actions Secrets 中配置 Windows 代码签名和 Apple Developer ID 公证凭据，并相应启用 Electron Builder 的签名配置。
+
 ## 模型配置
 
 | 服务        | 凭据与默认模型                                                                                                         | 文字何时出现   |
