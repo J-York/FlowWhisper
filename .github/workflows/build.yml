@@ -31,10 +31,10 @@ jobs:
         with:
           name: FlowWhisper-${{ matrix.os }}
           path: |
-            release/*.exe
-            release/*.dmg
-            release/*.AppImage
-            release/*.deb
+            release/**/*.exe
+            release/**/*.dmg
+            release/**/*.AppImage
+            release/**/*.deb
           if-no-files-found: error
 
   release:
@@ -55,8 +55,20 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          mapfile -d '' release_assets < <(
+            find release-assets -type f \( \
+              -name '*.exe' -o \
+              -name '*.dmg' -o \
+              -name '*.AppImage' -o \
+              -name '*.deb' \
+            \) -print0
+          )
+          if [ "${#release_assets[@]}" -eq 0 ]; then
+            echo "No installers were downloaded from the build artifacts."
+            exit 1
+          fi
           gh release create "${{ github.ref_name }}" \
-            release-assets/* \
+            "${release_assets[@]}" \
             --verify-tag \
             --generate-notes \
             --title "FlowWhisper ${{ github.ref_name }}"
