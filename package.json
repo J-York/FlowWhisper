@@ -1,0 +1,94 @@
+{
+  "name": "flowwhisper",
+  "version": "0.1.7",
+  "description": "跨平台流式语音输入，随想随说，自然成文。",
+  "author": "FlowWhisper contributors",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "main": "dist-electron/main.cjs",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "dev:web": "vite --host 127.0.0.1",
+    "typecheck": "tsc --noEmit",
+    "build": "npm run typecheck && vite build && node scripts/build-electron.mjs",
+    "test": "vitest run",
+    "test:desktop": "node scripts/smoke.mjs",
+    "test:drag": "node scripts/drag-smoke.mjs",
+    "test:preferences": "node scripts/preferences-smoke.mjs",
+    "dist": "npm run build && electron-builder",
+    "dist:win": "npm run build && electron-builder --win",
+    "dist:mac": "npm run build && electron-builder --mac",
+    "start": "electron ."
+  },
+  "dependencies": {
+    "lucide-react": "^0.468.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "ws": "^8.18.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/ws": "^8.5.0",
+    "@vitejs/plugin-react": "^4.7.0",
+    "electron": "44.4.2",
+    "electron-builder": "26.15.3",
+    "esbuild": "^0.25.0",
+    "pngjs": "^7.0.0",
+    "prettier": "^3.9.8",
+    "typescript": "~5.9.3",
+    "vite": "^6.4.0",
+    "vitest": "^4.1.11"
+  },
+  "build": {
+    "appId": "app.flowwhisper.desktop",
+    "productName": "FlowWhisper",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "dist/**/*",
+      "dist-electron/**/*",
+      "build/icon.png",
+      "build/tray.png",
+      "package.json"
+    ],
+    "asar": true,
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.png",
+      "category": "public.app-category.productivity",
+      "hardenedRuntime": true,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist",
+      "extendInfo": {
+        "NSMicrophoneUsageDescription": "FlowWhisper 使用麦克风将你的语音转换为文字。",
+        "NSAppleEventsUsageDescription": "FlowWhisper 将识别后的文字粘贴到你正在使用的应用。"
+      }
+    }
+  }
+}
